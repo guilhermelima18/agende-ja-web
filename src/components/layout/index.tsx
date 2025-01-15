@@ -1,10 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
-import { useRouter } from "next/navigation";
-
-import { useAuth } from "@/contexts/auth";
-
+import { ReactNode } from "react";
 import { Sidebar } from "../sidebar";
 
 type LayoutProps = {
@@ -12,15 +8,6 @@ type LayoutProps = {
 };
 
 export function Layout({ children }: LayoutProps) {
-  const navigate = useRouter();
-  const { userLogged } = useAuth();
-
-  useEffect(() => {
-    if (userLogged === null) {
-      navigate.push("/");
-    }
-  }, [navigate, userLogged]);
-
   return (
     <div className="w-full h-full flex">
       <Sidebar />

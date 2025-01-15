@@ -18,8 +18,8 @@ export function Sidebar() {
         <div className="w-full flex items-center justify-center">
           <Image
             src="/icons/logo-agende-ja.png"
-            width={100}
-            height={100}
+            width={130}
+            height={130}
             objectFit="contain"
             alt=""
           />

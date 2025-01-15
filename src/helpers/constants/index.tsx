@@ -1,11 +1,26 @@
-import { House } from "lucide-react";
+import { CalendarCheck, House } from "lucide-react";
 
 const sidebarMenu = [
   {
     name: "Início",
-    path: "/home",
+    path: "/inicio",
     icon: <House />,
+  },
+  {
+    name: "Agendamentos",
+    path: "/agendamentos",
+    icon: <CalendarCheck />,
   },
 ];
 
-export { sidebarMenu };
+const schedulingStatus = {
+  PENDING: "PENDENTE",
+  CANCELED: "CANCELADO",
+  CONFIRMED: "CONFIRMADO",
+};
+
+function formatSchedulingStatus(status: "PENDING" | "CANCELED" | "CONFIRMED") {
+  return schedulingStatus[status];
+}
+
+export { sidebarMenu, formatSchedulingStatus };

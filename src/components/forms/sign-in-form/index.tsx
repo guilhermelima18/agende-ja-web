@@ -38,13 +38,13 @@ export function SignInForm() {
     });
 
     if (response?.status === 200) {
-      navigate.push("/home");
+      navigate.push("/inicio");
     }
   }
 
   useEffect(() => {
     if (userLogged !== null) {
-      navigate.push("/home");
+      navigate.push("/inicio");
     }
   }, [navigate, userLogged]);
 
