@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useState } from "react";
 
-import { api } from "@/lib/axios";
+import { useAuth as useAuthContext } from "@/contexts/auth";
 import { useToast } from "./use-toast";
+
+import { api } from "@/lib/axios";
 
 type AuthParams = {
   email: string;
@@ -12,6 +14,7 @@ type AuthParams = {
 export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
 
+  const { setUserLogged } = useAuthContext();
   const { toast } = useToast();
 
   const handleAuth = useCallback(
@@ -20,10 +23,36 @@ export function useAuth() {
         setIsLoading(true);
 
         const response = await api.post("/sign-in", { email, password });
-        return {
-          data: response.data.data,
-          status: response.status,
-        };
+
+        if (response && response.data.data.role === "admin") {
+          const saveUserStorage = {
+            id: response.data.data.id,
+            role: response.data.data.role,
+            name: response.data.data.name,
+            email: response.data.data.email,
+            phoneNumber: response.data.data.phoneNumber,
+            dateOfBirth: response.data.data.dateOfBirth,
+            companyId: response.data.data.companyId,
+          };
+
+          setUserLogged(saveUserStorage);
+
+          localStorage.setItem(
+            "@agende-ja-web:user",
+            JSON.stringify(saveUserStorage)
+          );
+
+          return {
+            data: response.data.data,
+            status: response.status,
+          };
+        } else {
+          toast({
+            title: "Atenção!",
+            description: "Você não tem permissão para acessar o sistema!",
+            variant: "destructive",
+          });
+        }
       } catch (error: any) {
         toast({
           title: "Atenção!",
@@ -36,7 +65,7 @@ export function useAuth() {
         setIsLoading(false);
       }
     },
-    [toast]
+    [toast, setUserLogged]
   );
 
   return {

@@ -1,6 +1,12 @@
 "use client";
+
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ThreeDots } from "react-loader-spinner";
+
+import { useAuth } from "@/hooks/use-auth";
+import { useAuth as useAuthContext } from "@/contexts/auth";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,8 +16,7 @@ import {
   signInSchema,
   SignInSchemaType,
 } from "@/validations/sign-in-validation";
-import { useAuth } from "@/hooks/use-auth";
-import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export function SignInForm() {
   const {
@@ -22,8 +27,9 @@ export function SignInForm() {
     resolver: zodResolver(signInSchema),
   });
 
-  const router = useRouter();
+  const navigate = useRouter();
   const { isLoading, handleAuth } = useAuth();
+  const { userLogged } = useAuthContext();
 
   async function handleSignIn(data: SignInSchemaType) {
     const response = await handleAuth({
@@ -32,15 +38,19 @@ export function SignInForm() {
     });
 
     if (response?.status === 200) {
-      router.push("/home");
+      navigate.push("/home");
     }
   }
 
-  console.log(errors);
+  useEffect(() => {
+    if (userLogged !== null) {
+      navigate.push("/home");
+    }
+  }, [navigate, userLogged]);
 
   return (
     <form
-      className="w-1/2 border border-gray-200 rounded-md p-8"
+      className="w-full xl:w-1/2 border border-gray-200 rounded-md p-8"
       onSubmit={handleSubmit(handleSignIn)}
     >
       <h4 className="mb-4 font-bold text-lg">Entrar no sistema</h4>
@@ -71,7 +81,11 @@ export function SignInForm() {
       </div>
 
       <Button className="w-full mt-4" disabled={isLoading || isSubmitting}>
-        Entrar
+        {isLoading || isSubmitting ? (
+          <ThreeDots width={20} height={20} color="#fff" />
+        ) : (
+          "Entrar"
+        )}
       </Button>
     </form>
   );

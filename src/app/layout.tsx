@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 
 import "../styles/globals.css";
+import { Contexts } from "@/contexts";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,8 +26,10 @@ export default function RootLayout({
       <body
         className={`${inter.className} antialiased w-full h-screen max-h-screen`}
       >
-        {children}
-        <Toaster />
+        <Contexts>
+          {children}
+          <Toaster />
+        </Contexts>
       </body>
     </html>
   );
