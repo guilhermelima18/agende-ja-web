@@ -47,7 +47,7 @@ export default function Professionals() {
         ) : professionals?.length === 0 ? (
           <EmptyMessage message="Não existe profissionais para esse estabelecimento!" />
         ) : (
-          <div className="mt-10">
+          <div className="w-full h-[700px] overflow-y-auto mt-10">
             <TableProfessionals professionals={professionals} />
           </div>
         )}

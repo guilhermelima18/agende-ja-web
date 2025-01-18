@@ -1,6 +1,8 @@
 import moment from "moment";
+import { Trash } from "lucide-react";
 
 import { AppointmentsProps } from "@/hooks/use-appointments";
+
 import {
   Table,
   TableBody,
@@ -9,13 +11,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+
 import { formatSchedulingStatus } from "@/helpers/constants";
 
 type TableAppointmentsProps = {
   appointments: AppointmentsProps[];
+  handleDeleteAppointments: (appointmentId: string) => void;
 };
 
-export function TableAppointments({ appointments }: TableAppointmentsProps) {
+export function TableAppointments({
+  appointments,
+  handleDeleteAppointments,
+}: TableAppointmentsProps) {
   return (
     <Table>
       <TableHeader>
@@ -25,6 +33,7 @@ export function TableAppointments({ appointments }: TableAppointmentsProps) {
           <TableHead>Profissional</TableHead>
           <TableHead>Agendado para</TableHead>
           <TableHead className="w-[100px]">Status</TableHead>
+          <TableHead className="w-[100px]" />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -39,6 +48,15 @@ export function TableAppointments({ appointments }: TableAppointmentsProps) {
                 .format("DD/MM/YYYY [às] HH:mm")}
             </TableCell>
             <TableCell>{formatSchedulingStatus(appointment.status)}</TableCell>
+            <TableCell>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => handleDeleteAppointments(appointment.id)}
+              >
+                <Trash />
+              </Button>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

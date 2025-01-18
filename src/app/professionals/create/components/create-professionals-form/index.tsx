@@ -51,11 +51,16 @@ export function CreateProfessionalsForm() {
     });
 
     if (response && response.status === 201) {
-      toast({
+      const successToast = toast({
         title: "Sucesso!",
         description: "Profissional cadastrado!",
-        variant: "default",
+        variant: "primary",
       });
+
+      setTimeout(() => {
+        successToast.dismiss();
+      }, 1000);
+
       navigate.push("/professionals");
     }
   }

@@ -12,7 +12,7 @@ export type AppointmentsProps = {
 };
 
 type GetAppointmentsParams = {
-  professionalId: string;
+  professionalId?: string;
   companyId: string;
 };
 
@@ -25,9 +25,13 @@ export function useAppointments() {
       try {
         setAppointmentsLoading(true);
 
-        const response = await api.get(
-          `/appointments?professionalId=${professionalId}&companyId=${companyId}`
-        );
+        let endpoint = `/appointments?companyId=${companyId}`;
+
+        if (professionalId) {
+          endpoint += `&professionalId=${professionalId}`;
+        }
+
+        const response = await api.get(endpoint);
 
         if (response) {
           setAppointments(response.data.data);
@@ -41,9 +45,26 @@ export function useAppointments() {
     []
   );
 
+  const deleteAppointments = useCallback(
+    async ({ appointmentId }: { appointmentId: string }) => {
+      try {
+        const response = await api.delete(`/appointments/${appointmentId}`);
+
+        return {
+          data: response.data.data,
+          status: response.status,
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    []
+  );
+
   return {
     appointments,
     appointmentsLoading,
     getAppointments,
+    deleteAppointments,
   };
 }
