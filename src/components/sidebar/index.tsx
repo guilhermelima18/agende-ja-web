@@ -20,8 +20,7 @@ export function Sidebar() {
             src="/icons/logo-agende-ja.png"
             width={130}
             height={130}
-            objectFit="contain"
-            alt=""
+            alt="Logo Agende Já!"
           />
         </div>
 
@@ -31,6 +30,7 @@ export function Sidebar() {
               key={menu.path}
               name={menu.name}
               path={menu.path}
+              subpath={menu.subpath}
               icon={menu.icon}
             />
           ))}

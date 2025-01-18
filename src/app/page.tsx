@@ -15,8 +15,7 @@ export default function SignIn() {
           src="/background.webp"
           width={800}
           height={800}
-          objectFit="contain"
-          alt=""
+          alt="Logo Agende Já!"
         />
       </div>
     </div>

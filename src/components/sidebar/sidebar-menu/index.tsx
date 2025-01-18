@@ -9,20 +9,26 @@ import { Button } from "@/components/ui/button";
 type SidebarMenuProps = {
   name: string;
   path: string;
+  subpath?: string;
   icon: ReactNode;
 };
 
-export function SidebarMenu({ name, path, icon: Icon }: SidebarMenuProps) {
+export function SidebarMenu({
+  name,
+  path,
+  subpath,
+  icon: Icon,
+}: SidebarMenuProps) {
   const pathname = usePathname();
-
-  console.log(pathname === path);
 
   return (
     <Link href={path}>
       <Button
         className={`${
-          pathname === path ? "bg-purple-500" : "bg-white text-gray-900"
-        } w-full flex items-center justify-start hover:text-white hover:bg-purple-500`}
+          pathname === path || pathname === subpath
+            ? "bg-primary"
+            : "bg-white text-gray-900"
+        } w-full flex items-center justify-start hover:text-white hover:bg-primary`}
       >
         {Icon && Icon}
         {name}

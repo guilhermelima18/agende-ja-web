@@ -1,15 +1,21 @@
-import { CalendarCheck, House } from "lucide-react";
+import { CalendarCheck, House, Users } from "lucide-react";
 
 const sidebarMenu = [
   {
     name: "Início",
-    path: "/inicio",
+    path: "/home",
     icon: <House />,
   },
   {
     name: "Agendamentos",
-    path: "/agendamentos",
+    path: "/appointments",
     icon: <CalendarCheck />,
+  },
+  {
+    name: "Profissionais",
+    path: "/professionals",
+    subpath: "/professionals/create",
+    icon: <Users />,
   },
 ];
 
