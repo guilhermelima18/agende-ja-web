@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Trash } from "lucide-react";
+import { CheckCircle, Trash } from "lucide-react";
 
 import { AppointmentsProps } from "@/hooks/use-appointments";
 
@@ -17,11 +17,13 @@ import { formatSchedulingStatus } from "@/helpers/constants";
 
 type TableAppointmentsProps = {
   appointments: AppointmentsProps[];
+  handleUpdateAppointmentsStatus: (appointmentId: string) => void;
   handleDeleteAppointments: (appointmentId: string) => void;
 };
 
 export function TableAppointments({
   appointments,
+  handleUpdateAppointmentsStatus,
   handleDeleteAppointments,
 }: TableAppointmentsProps) {
   return (
@@ -48,13 +50,20 @@ export function TableAppointments({
                 .format("DD/MM/YYYY [às] HH:mm")}
             </TableCell>
             <TableCell>{formatSchedulingStatus(appointment.status)}</TableCell>
-            <TableCell>
+            <TableCell className="flex items-center gap-2">
               <Button
                 variant="destructive"
                 size="sm"
                 onClick={() => handleDeleteAppointments(appointment.id)}
               >
                 <Trash />
+              </Button>
+
+              <Button
+                size="sm"
+                onClick={() => handleUpdateAppointmentsStatus(appointment.id)}
+              >
+                <CheckCircle />
               </Button>
             </TableCell>
           </TableRow>

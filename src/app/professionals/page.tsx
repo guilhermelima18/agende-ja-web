@@ -45,7 +45,7 @@ export default function Professionals() {
             <ThreeDots width={50} height={50} color="#884DEE" />
           </div>
         ) : professionals?.length === 0 ? (
-          <EmptyMessage message="Não existe profissionais para esse estabelecimento!" />
+          <EmptyMessage message="Esse estabelecimento não tem profissionais cadastrados!" />
         ) : (
           <div className="w-full h-[700px] overflow-y-auto mt-10">
             <TableProfessionals professionals={professionals} />

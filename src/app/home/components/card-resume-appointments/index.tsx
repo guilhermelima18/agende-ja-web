@@ -55,19 +55,19 @@ export function CardResumeAppointments() {
         </div>
       ) : (
         <div className="w-full flex items-center justify-center gap-8 mt-20">
-          <div className="w-80 h-40 flex flex-col items-center justify-center gap-8 p-4 border border-purple-500 rounded-md">
+          <div className="w-80 h-40 flex flex-col items-center justify-center gap-8 p-4 border border-gray-500 rounded-md">
             <h4>Total de agendamentos</h4>
             <span className="font-semibold text-4xl">{totalAppointments}</span>
           </div>
 
-          <div className="w-80 h-40 flex flex-col items-center justify-center gap-8 p-4 border border-purple-500 rounded-md">
+          <div className="w-80 h-40 flex flex-col items-center justify-center gap-8 p-4 border border-gray-500 rounded-md">
             <h4>Agendamentos pendentes</h4>
             <span className="font-semibold text-4xl">
               {pendingAppointments}
             </span>
           </div>
 
-          <div className="w-80 h-40 flex flex-col items-center justify-center gap-8 p-4 border border-purple-500 rounded-md">
+          <div className="w-80 h-40 flex flex-col items-center justify-center gap-8 p-4 border border-gray-500 rounded-md">
             <h4>Agendamentos cancelados</h4>
             <span className="font-semibold text-4xl">
               {canceledAppointments}

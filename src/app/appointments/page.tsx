@@ -23,8 +23,30 @@ export default function Appointments() {
     appointments,
     appointmentsLoading,
     getAppointments,
+    updateAppointmentsStatus,
     deleteAppointments,
   } = useAppointments();
+
+  async function handleUpdateAppointmentsStatus(appointmentId: string) {
+    const response = await updateAppointmentsStatus({ appointmentId });
+
+    if (response && response.status === 200) {
+      const successToast = toast({
+        title: "Sucesso!",
+        description: "Agendamento atualizado!",
+        variant: "primary",
+      });
+
+      await getAppointments({
+        professionalId: professionalSelected!,
+        companyId: userLogged!.companyId,
+      });
+
+      setTimeout(() => {
+        successToast.dismiss();
+      }, 1000);
+    }
+  }
 
   async function handleDeleteAppointments(appointmentId: string) {
     const response = await deleteAppointments({ appointmentId });
@@ -73,11 +95,12 @@ export default function Appointments() {
             <ThreeDots width={50} height={50} color="#884DEE" />
           </div>
         ) : appointments?.length === 0 ? (
-          <EmptyMessage message="Não existe agendamentos para esse profissional!" />
+          <EmptyMessage message="Primeiro, escolha um profissional" />
         ) : (
           <div className="w-full h-[700px] overflow-y-auto mt-10">
             <TableAppointments
               appointments={appointments}
+              handleUpdateAppointmentsStatus={handleUpdateAppointmentsStatus}
               handleDeleteAppointments={handleDeleteAppointments}
             />
           </div>

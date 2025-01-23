@@ -45,6 +45,22 @@ export function useAppointments() {
     []
   );
 
+  const updateAppointmentsStatus = useCallback(
+    async ({ appointmentId }: { appointmentId: string }) => {
+      try {
+        const response = await api.put(`/appointments/${appointmentId}`);
+
+        return {
+          data: response.data.data,
+          status: response.status,
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    []
+  );
+
   const deleteAppointments = useCallback(
     async ({ appointmentId }: { appointmentId: string }) => {
       try {
@@ -65,6 +81,7 @@ export function useAppointments() {
     appointments,
     appointmentsLoading,
     getAppointments,
+    updateAppointmentsStatus,
     deleteAppointments,
   };
 }
